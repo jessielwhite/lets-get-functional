@@ -12,4 +12,15 @@ const customers = require("./data/customers.json");
  * 
  * 2. Solve all problems as outlined in the README.
  */
- 
+const _ = require("lodown-jessielwhite");
+console.log(_);
+
+var males = _.filter(customers, function(customer) { 
+    return customer.gender === 'male';
+});
+console.log(males.length);
+
+var females = _.filter(customers, function(customer) {
+    return customer.gender === 'female';
+});
+console.log(females.length);

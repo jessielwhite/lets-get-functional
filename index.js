@@ -57,8 +57,7 @@ _.each(youngestPeople, function(youngPerson) {
 var balances = _.pluck(customers, "balance");
 var total = _.reduce(balances, function(memo, balance){
     balance =  Number(balance.replace(/[^0-9\.]+/g,""));
-    // cuz stackoverflow :)
-    return memo + balance;
+        return memo + balance;
 }, 0);
 var average = total / balances.length;
 console.log(average);
@@ -102,3 +101,27 @@ function friendsWith(customers, friendName) {
 console.log(friendsWith(customers, "Cooley Jimenez"));
 
 // Question 9
+
+function flatten(arrays) {
+    var flattened = [];
+    _.each(arrays, function(array) {
+        _.each(array, function(item) {
+            flattened.push(item);
+        });
+    });
+    return flattened;
+}
+
+var pluckedTags = _.pluck(customers, "tags");
+pluckedTags = flatten(pluckedTags);
+
+var counts = _.reduce(pluckedTags, function(tagObject, tag) {
+    if (tagObject[tag] >= 1) {
+        tagObject[tag] = tagObject[tag]++;
+    } else {
+        tagObject[tag] = 1;
+    }
+    return tagObject;
+},{});
+
+console.log(counts);

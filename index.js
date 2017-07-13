@@ -94,6 +94,7 @@ function friendsWith(customers, friendName) {
              return aFriend.name === friendName;
         });
         return matches.length > 0;
+        
     });
     return _.pluck(isFriendsWith, "name");
 }
@@ -114,14 +115,27 @@ function flatten(arrays) {
 
 var pluckedTags = _.pluck(customers, "tags");
 pluckedTags = flatten(pluckedTags);
+var counts = {};
+pluckedTags.forEach(function(tag) { counts[tag] = (counts[tag] || 0) + 1; });
 
-var counts = _.reduce(pluckedTags, function(tagObject, tag) {
-    if (tagObject[tag] >= 1) {
-        tagObject[tag] = tagObject[tag]++;
+ var mostCommonCount = 0;
+ var mostCommonTags = [];
+_.each(counts, function(v, k, c){
+    if(v >= mostCommonCount){
+        mostCommonTags.unshift(k);
+        mostCommonCount = v;
     } else {
-        tagObject[tag] = 1;
-    }
-    return tagObject;
+        mostCommonTags.push(k);
+    } 
+});
+
+console.log(mostCommonTags.slice(0, 3));
+
+// Question 10
+
+var genders = customers.reduce(function(s, customer, i) {
+    s[customer.gender] = s[customer.gender] ? s[customer.gender] + 1 : 1;
+    return s;
 },{});
 
-console.log(counts);
+console.log(genders);
